@@ -1,0 +1,1 @@
+D:\Ide project\BadApple\build\classes\kotlin\main\IMGFileManipulations.class;D:\Ide project\BadApple\build\classes\kotlin\main\MainKt.class;D:\Ide project\BadApple\build\classes\kotlin\main\VideoConvert.class
