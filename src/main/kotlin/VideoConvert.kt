@@ -3,14 +3,14 @@ import org.opencv.core.Size
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.opencv.videoio.VideoCapture
+import org.opencv.videoio.Videoio.CAP_PROP_FRAME_COUNT
 import java.io.File
 import javax.swing.JFileChooser
 
 class VideoConvert {
-
     fun convertToImg() {
         val fileChooser = JFileChooser()
-        val imgproc = Imgproc()
+        val consoleUi = ConsoleUI()
         val result = fileChooser.showOpenDialog(null)
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -21,11 +21,19 @@ class VideoConvert {
             if (!directory.exists()) {
                 directory.mkdir()
             }
+            val frames = videoCapture.get(CAP_PROP_FRAME_COUNT)
             var frameCounter = 0
+            consoleUi.convertingToIMG()
             while (videoCapture.isOpened) {
                 val frame = Mat()
-                val scaleSize = Size(300.0, 200.0)
-                imgproc
+                var exitFrame = Mat()
+                val scaleSize = Size(128.0, 72.0)
+                try{
+                    val imgproc = Imgproc.resize(frame,exitFrame,scaleSize)
+                } catch (e: Exception){
+                    if ((frameCounter%(frames/100)).toInt() == 0) print("▇")
+                }
+
                 if (videoCapture.read(frame)) {
                     Imgcodecs.imwrite("images\\frame_${frameCounter}.jpg", frame)
                     frameCounter++
@@ -33,7 +41,7 @@ class VideoConvert {
                     break
                 }
             }
-
+            println()
             videoCapture.release()
         }
     }

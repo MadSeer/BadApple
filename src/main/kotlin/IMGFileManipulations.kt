@@ -4,7 +4,7 @@ import org.opencv.core.Mat
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import java.io.File
-import java.io.FileOutputStream
+import java.io.FileWriter
 
 class IMGFileManipulations {
 
@@ -36,31 +36,99 @@ class IMGFileManipulations {
         return imageArray
     }
 
-    /*private fun arrayToASCII(img: Array<DoubleArray>, counter: Int){
+    private fun arrayToASCII(img: Array<DoubleArray>, counter: Int){
         val fileASCII = File("ASCII\\frame_${counter}.txt")
-        if (!fileASCII.exists()) {
-            try {
-                val write = FileOutputStream("ASCII\\frame_${counter}.txt")
+        var buff: Array<Array<String>> = Array(img.size) { Array(img[0].size) { " " } }
+        //if (fileASCII.exists()) {
+            //try {
+                val write = FileWriter("ASCII\\frame_${counter}.txt")
+                img.forEachIndexed { index1, doubles ->
+                    doubles.forEachIndexed { index2, d ->
 
-                write.write(buffer,0,buffer.size)
-            } catch (e: Exception) {
-                println("Error")
+                        var check:String = (img[index1][index2]/32).toInt().toString()
+                        when(check){
+                            "0" -> buff[index1][index2] = symbol0
+                            "1" -> buff[index1][index2] = symbol1
+                            "2" -> buff[index1][index2] = symbol2
+                            "3" -> buff[index1][index2] = symbol3
+                            "4" -> buff[index1][index2] = symbol4
+                            "5" -> buff[index1][index2] = symbol5
+                            "6" -> buff[index1][index2] = symbol6
+                            "7" -> buff[index1][index2] = symbol7
+                        }
+                    }
+
+                }
+                /*for (i in 0 until img[0].size){
+                    for(j in 0 until img.size){
+                        var check:String = (img[i][j]/32).toInt().toString()
+                        when(check){
+                            "0" -> buff[i][j] = symbol0
+                            "1" -> buff[i][j] = symbol1
+                            "2" -> buff[i][j] = symbol2
+                            "3" -> buff[i][j] = symbol3
+                            "4" -> buff[i][j] = symbol4
+                            "5" -> buff[i][j] = symbol5
+                            "6" -> buff[i][j] = symbol6
+                            "7" -> buff[i][j] = symbol7
+                        }
+                    }
+                }*/
+
+        buff.forEachIndexed { index1, doubles ->
+            doubles.forEachIndexed { index2, d ->
+                print(buff[index1][index2])
+                write.write(buff[index1][index2])
             }
-        }
-    }*/
+            println()
+            write.write("\n")
 
+        }
+        write.flush()
+                /*for (i in 0..buff[0].size-1){
+                    for(j in 0..buff.size-1){
+                        print(buff[i][j])
+                    }
+                    println()
+                }
+                for (i in 0..buff[0].size-1){
+                    for(j in 0..buff.size-1){
+                        write.write(buff[i][j])
+                    }
+                    write.write("\n")
+                }*/
+                write.flush()
+           // } catch (e: Exception) { //println(e) }
+        //}
+    }
 
     fun convertAllToASCII() {
+        val consoleUI = ConsoleUI()
         val directory = File("ASCII")
         if (!directory.exists()) {
             directory.mkdir()
         }
+        consoleUI.convertingToTXT()
         var counter = 0
         imagesIMG.forEach { image ->
             val img = imgToGray(Imgcodecs.imread(image.path))
-            //arrayToASCII(img,counter)
+            arrayToASCII(img,counter)
+            if ((counter%(imagesIMG.size/100)) == 0) print("▇")
             counter++
         }
+        println()
+    }
+
+    companion object{
+        const val symbol0: String = " "
+        const val symbol1: String = "▂"
+        const val symbol2: String = "▃"
+        const val symbol3: String = "▄"
+        const val symbol4: String = "▅"
+        const val symbol5: String = "▆"
+        const val symbol6: String = "▇"
+        const val symbol7: String = "█"
+
     }
 
 }
