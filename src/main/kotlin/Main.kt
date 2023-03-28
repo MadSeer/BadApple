@@ -6,7 +6,7 @@ fun main() {
     val convertIMG = IMGFileManipulations()
     convertMP4.convertToImg()
     convertIMG.filesList()
-    convertIMG.displayFileNames()
+    //convertIMG.displayFileNames()
     convertIMG.convertAllToASCII()
     println("Gotovo")
 }

@@ -36,12 +36,12 @@ class IMGFileManipulations {
         return imageArray
     }
 
-    private fun arrayToASCII(img: Array<DoubleArray>, counter: Int){
-        val fileASCII = File("ASCII\\frame_${counter}.txt")
+    private fun arrayToASCII(img: Array<DoubleArray>,imageName: String, counter: Int){
+        val fileASCII = File("ASCII\\${imageName}.txt")
         var buff: Array<Array<String>> = Array(img.size) { Array(img[0].size) { " " } }
         //if (fileASCII.exists()) {
             //try {
-                val write = FileWriter("ASCII\\frame_${counter}.txt")
+                val write = FileWriter(fileASCII)
                 img.forEachIndexed { index1, doubles ->
                     doubles.forEachIndexed { index2, d ->
 
@@ -61,10 +61,10 @@ class IMGFileManipulations {
                 }
         buff.forEachIndexed { index1, doubles ->
             doubles.forEachIndexed { index2, d ->
-                print(buff[index1][index2])
+                //print(buff[index1][index2])
                 write.write(buff[index1][index2])
             }
-            println()
+            //println()
             write.write("\n")
 
         }
@@ -80,15 +80,29 @@ class IMGFileManipulations {
         consoleUI.convertingToTXT()
         var counter = 0
         imagesIMG.forEach { image ->
+            var imageName = image.name
             val img = imgToGray(Imgcodecs.imread(image.path))
-            arrayToASCII(img,counter)
-            if ((counter%(imagesIMG.size/100)) == 0) print("▇")
+            arrayToASCII(img,imageName,counter)
+            if ((counter%(imagesIMG.size/100)) == 0) {
+                print("▇")
+            }
             counter++
         }
         println()
     }
 
 
+
+    /*companion object{
+        const val symbol0: String = "  "
+        const val symbol1: String = "▂▂"
+        const val symbol2: String = "▃▃"
+        const val symbol3: String = "▄▄"
+        const val symbol4: String = "▅▅"
+        const val symbol5: String = "▆▆"
+        const val symbol6: String = "▇▇"
+        const val symbol7: String = "██"
+    }*/
 
     companion object{
         const val symbol0: String = " "
@@ -99,7 +113,6 @@ class IMGFileManipulations {
         const val symbol5: String = "▆"
         const val symbol6: String = "▇"
         const val symbol7: String = "█"
-
     }
 
 }
