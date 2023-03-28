@@ -59,22 +59,6 @@ class IMGFileManipulations {
                     }
 
                 }
-                /*for (i in 0 until img[0].size){
-                    for(j in 0 until img.size){
-                        var check:String = (img[i][j]/32).toInt().toString()
-                        when(check){
-                            "0" -> buff[i][j] = symbol0
-                            "1" -> buff[i][j] = symbol1
-                            "2" -> buff[i][j] = symbol2
-                            "3" -> buff[i][j] = symbol3
-                            "4" -> buff[i][j] = symbol4
-                            "5" -> buff[i][j] = symbol5
-                            "6" -> buff[i][j] = symbol6
-                            "7" -> buff[i][j] = symbol7
-                        }
-                    }
-                }*/
-
         buff.forEachIndexed { index1, doubles ->
             doubles.forEachIndexed { index2, d ->
                 print(buff[index1][index2])
@@ -85,21 +69,6 @@ class IMGFileManipulations {
 
         }
         write.flush()
-                /*for (i in 0..buff[0].size-1){
-                    for(j in 0..buff.size-1){
-                        print(buff[i][j])
-                    }
-                    println()
-                }
-                for (i in 0..buff[0].size-1){
-                    for(j in 0..buff.size-1){
-                        write.write(buff[i][j])
-                    }
-                    write.write("\n")
-                }*/
-                write.flush()
-           // } catch (e: Exception) { //println(e) }
-        //}
     }
 
     fun convertAllToASCII() {
@@ -118,6 +87,8 @@ class IMGFileManipulations {
         }
         println()
     }
+
+
 
     companion object{
         const val symbol0: String = " "

@@ -28,14 +28,14 @@ class VideoConvert {
                 val frame = Mat()
                 var exitFrame = Mat()
                 val scaleSize = Size(128.0, 72.0)
-                try{
-                    val imgproc = Imgproc.resize(frame,exitFrame,scaleSize)
-                } catch (e: Exception){
-                    if ((frameCounter%(frames/100)).toInt() == 0) print("▇")
-                }
-
+                if ((frameCounter%(frames/100)).toInt() == 0) print("▇")
                 if (videoCapture.read(frame)) {
-                    Imgcodecs.imwrite("images\\frame_${frameCounter}.jpg", frame)
+                    try{
+                        Imgproc.resize(frame, exitFrame,scaleSize)
+                    } catch (e: Exception){
+                        print(e)
+                    }
+                    Imgcodecs.imwrite("images\\frame_${frameCounter}.jpg", exitFrame)
                     frameCounter++
                 } else {
                     break

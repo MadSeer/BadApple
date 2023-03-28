@@ -7,6 +7,6 @@ fun main() {
     convertMP4.convertToImg()
     convertIMG.filesList()
     convertIMG.displayFileNames()
-    //convertIMG.convertAllToASCII()
+    convertIMG.convertAllToASCII()
     println("Gotovo")
 }
