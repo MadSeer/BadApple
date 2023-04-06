@@ -5,6 +5,11 @@ import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import java.io.File
 import java.io.FileWriter
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.util.stream.Collectors
+import kotlin.io.path.name
 
 class IMGFileManipulations {
 
@@ -17,7 +22,15 @@ class IMGFileManipulations {
     }
 
     fun displayFileNames() {
-        this.imagesIMG.forEach { file -> println(file) }
+        val files = Files.list(Paths.get("ASCII")).collect(Collectors.toList())
+        var sorted = arrayListOf<Path?>()
+        var iter = 0
+        while (sorted.size<files.size) {
+            var file = files.find{it.fileName.name.split(".")[0].toInt() == iter}
+            sorted.add(iter, file)
+            iter++
+        }
+        sorted.forEach { file -> println(file) }
     }
 
     private fun imgToGray(image: Mat): Array<DoubleArray> {

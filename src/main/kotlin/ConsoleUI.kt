@@ -35,4 +35,8 @@ class ConsoleUI {
         """.trimIndent())
     }
 
+    fun cls() /*CoroutineScope(Dispatchers.IO).launch*/{
+        ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor()
+    }
+
 }
